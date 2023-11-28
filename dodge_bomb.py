@@ -11,6 +11,21 @@ delta = {  #練習3
     pg.K_RIGHT: (+5, 0)
 }
 
+
+def check_bound(rct: pg.Rect) -> tuple[bool, bool]:  #練習4
+    """
+    オブジェクトが画面外かを判定し,真理値タプルを返す
+    引数2 rct : オブジェクトSurfaceのRect
+    戻り値 : 横方向,縦方向のはみだし判定結果（画面内:True / 画面外:False
+    """
+    yoko, tate = True, True
+    if rct.left < 0 or WIDTH < rct.right:
+        yoko = False
+    if rct.top < 0 or HEIGHT < rct.bottom:
+        tate = False
+    return yoko, tate
+
+
 def main():
     pg.display.set_caption("逃げろ！こうかとん")
     screen = pg.display.set_mode((WIDTH, HEIGHT))
@@ -43,9 +58,17 @@ def main():
 
         
         screen.blit(bg_img, [0, 0])
-        kk_rect.move_ip(sum_mv[0], sum_mv[1])  #練習3
+        kk_rect.move_ip(sum_mv[0], sum_mv[1])  #練習4
+        if check_bound(kk_rect) != (True, True):  #練習4
+            kk_rect.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rect)  #練習3
         bb_rect.move_ip(vx, vy)  #練習2
+        yoko, tate = check_bound(bb_rect)  #練習4
+        if not yoko:
+            vx *= -1
+        if not tate:
+            vy *= -1
+        bb_rect.move_ip(vx, vy)
         screen.blit(bb_img, bb_rect)
         pg.display.update()
         tmr += 1
