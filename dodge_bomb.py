@@ -53,8 +53,7 @@ def main():
     bb_rect.centery = random.randint(0, HEIGHT)  #練習1
     vx, vy = +5, +5  #練習2
     accs = [a for a in range(1, 11)]  #演習2：加速度リスト
-    
-
+    #Issue1 空行の削除
     clock = pg.time.Clock()
     tmr = 0
     while True:
@@ -63,10 +62,10 @@ def main():
                 return
             
         if kk_rect.colliderect(bb_rect):  #練習5
-            screen.blit(bg_img, [0, 0])
-            kk_img = pg.image.load("ex02/fig/8.png")
-            kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
-            screen.blit(kk_img, kk_rect)
+            screen.blit(bg_img, [0, 0])  #演習3：背景を描画
+            kk_img = pg.image.load("ex02/fig/8.png")  #演習3：泣いている画像を読み込み
+            kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)  #演習３：画像を拡大
+            screen.blit(kk_img, kk_rect)  #演習３：画像を描写
             pg.display.update()
             clock.tick(0.5)
             print("Game Over")
