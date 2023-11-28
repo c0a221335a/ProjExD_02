@@ -32,6 +32,17 @@ def main():
     bg_img = pg.image.load("ex02/fig/pg_bg.jpg")
     kk_img = pg.image.load("ex02/fig/3.png")
     kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+    kk_img_dic = {  #演習1：回転したこうかとんの辞書
+        (0, -5): pg.transform.rotozoom(kk_img, -90, 1.0),
+        (+5, -5): pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), 45, 1.0),
+        (+5, 0): pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), 0, 1.0),
+        (+5, +5): pg.transform.rotozoom(pg.transform.flip(kk_img, True, False), -45, 1.0),
+        (0, +5): pg.transform.rotozoom(kk_img, 90, 1.0),
+        (-5, +5): pg.transform.rotozoom(kk_img, 45, 1.0),
+        (-5, 0): pg.transform.rotozoom(kk_img, 0, 1.0),
+        (-5, -5): pg.transform.rotozoom(kk_img, -45, 1.0),
+        (0, 0): kk_img
+    }
     kk_rect = kk_img.get_rect()  #練習3
     kk_rect.center = 900, 400  #練習3
     bb_img = pg.Surface((20, 20))  #練習1
@@ -59,7 +70,7 @@ def main():
             if key_lst[k]:
                 sum_mv[0] += tpl[0]
                 sum_mv[1] += tpl[1]
-
+                kk_img = kk_img_dic[tuple(sum_mv)]  #演習1：向きの変更
         
         screen.blit(bg_img, [0, 0])
         kk_rect.move_ip(sum_mv[0], sum_mv[1])  #練習4
