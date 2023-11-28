@@ -63,6 +63,12 @@ def main():
                 return
             
         if kk_rect.colliderect(bb_rect):  #練習5
+            screen.blit(bg_img, [0, 0])
+            kk_img = pg.image.load("ex02/fig/8.png")
+            kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)
+            screen.blit(kk_img, kk_rect)
+            pg.display.update()
+            clock.tick(0.5)
             print("Game Over")
             return
 
