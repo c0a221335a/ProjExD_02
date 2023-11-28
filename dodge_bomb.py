@@ -43,15 +43,15 @@ def main():
         (-5, -5): pg.transform.rotozoom(kk_img, -45, 1.0),
         (0, 0): kk_img
     }
-    kk_rect = kk_img.get_rect()  #練習3
-    kk_rect.center = 900, 400  #練習3
-    bb_img = pg.Surface((20, 20))  #練習1
+    kk_rect = kk_img.get_rect()  #練習3:rectを取得
+    kk_rect.center = 900, 400  #練習3:こうかとんの初期位置
+    bb_img = pg.Surface((20, 20))  #練習1:爆弾のSurface
     bb_img.set_colorkey((0, 0, 0))
-    pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  #練習1
+    pg.draw.circle(bb_img, (255, 0, 0), (10, 10), 10)  #練習1:爆弾の円
     bb_rect = bb_img.get_rect()  #練習1
-    bb_rect.centerx = random.randint(0, WIDTH)  #練習1
-    bb_rect.centery = random.randint(0, HEIGHT)  #練習1
-    vx, vy = +5, +5  #練習2
+    bb_rect.centerx = random.randint(0, WIDTH)  #練習1:爆弾の初期位置(x)
+    bb_rect.centery = random.randint(0, HEIGHT)  #練習1:爆弾の初期位置(y)
+    vx, vy = +5, +5  #練習2:爆弾の移動方向
     accs = [a for a in range(1, 11)]  #演習2：加速度リスト
     #Issue1 空行の削除
     clock = pg.time.Clock()
@@ -61,33 +61,33 @@ def main():
             if event.type == pg.QUIT: 
                 return
             
-        if kk_rect.colliderect(bb_rect):  #練習5
+        if kk_rect.colliderect(bb_rect):  #練習5:GameOver条件（爆弾と接触）
             screen.blit(bg_img, [0, 0])  #演習3：背景を描画
             kk_img = pg.image.load("ex02/fig/8.png")  #演習3：泣いている画像を読み込み
             kk_img = pg.transform.rotozoom(kk_img, 0, 2.0)  #演習３：画像を拡大
             screen.blit(kk_img, kk_rect)  #演習３：画像を描写
-            pg.display.update()
-            clock.tick(0.5)
+            pg.display.update()  #演習3:画面を更新
+            clock.tick(0.5)  #演習3:2秒まつ
             print("Game Over")
             return
 
-        key_lst = pg.key.get_pressed()  #練習3
-        sum_mv = [0, 0]  #練習3
-        for k, tpl in delta.items():  #練習3
+        key_lst = pg.key.get_pressed()  #練習3:キーボード入力の取得
+        sum_mv = [0, 0]  #練習3:移動量の合計
+        for k, tpl in delta.items():  #練習3:kにkey,tplに移動量を格納
             if key_lst[k]:
                 sum_mv[0] += tpl[0]
                 sum_mv[1] += tpl[1]
                 kk_img = kk_img_dic[tuple(sum_mv)]  #演習1：向きの変更
         
         screen.blit(bg_img, [0, 0])
-        kk_rect.move_ip(sum_mv[0], sum_mv[1])  #練習4
-        if check_bound(kk_rect) != (True, True):  #練習4
+        kk_rect.move_ip(sum_mv[0], sum_mv[1])  #練習4:sum_mvの量だけこうかとんを移動
+        if check_bound(kk_rect) != (True, True):  #練習4:こうかとんが画面外の場合元の位置に戻す
             kk_rect.move_ip(-sum_mv[0], -sum_mv[1])
-        screen.blit(kk_img, kk_rect)  #練習3
+        screen.blit(kk_img, kk_rect)  #練習3:こうかとんを描画
         #Issue2演算子の前後にスペースの追加
         avx, avy = vx * accs[min(tmr // 500, 9)], vy * accs[min(tmr // 500, 9)]  #演習2：tmrに応じて速度を上げる
         bb_rect.move_ip(avx, avy)  #練習2
-        yoko, tate = check_bound(bb_rect)  #練習4
+        yoko, tate = check_bound(bb_rect)  #練習4:爆弾がはみ出ていないかを格納
         if not yoko:
             vx *= -1
             avx *= -1
