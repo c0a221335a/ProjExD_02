@@ -48,6 +48,10 @@ def main():
         for event in pg.event.get():
             if event.type == pg.QUIT: 
                 return
+            
+        if kk_rect.colliderect(bb_rect):  #練習5
+            print("Game Over")
+            return
 
         key_lst = pg.key.get_pressed()  #練習3
         sum_mv = [0, 0]  #練習3
