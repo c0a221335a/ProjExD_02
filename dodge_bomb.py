@@ -18,6 +18,7 @@ def main():
     bb_rect = bb_img.get_rect()  #練習1
     bb_rect.centerx = random.randint(0, WIDTH)  #練習1
     bb_rect.centery = random.randint(0, HEIGHT)  #練習1
+    vx, vy = +5, +5  #練習2
 
     clock = pg.time.Clock()
     tmr = 0
@@ -28,10 +29,11 @@ def main():
 
         screen.blit(bg_img, [0, 0])
         screen.blit(kk_img, [900, 400])
+        bb_rect.move_ip(vx, vy)  #練習2
         screen.blit(bb_img, bb_rect)
         pg.display.update()
         tmr += 1
-        clock.tick(10)
+        clock.tick(50)
 
 
 if __name__ == "__main__":
