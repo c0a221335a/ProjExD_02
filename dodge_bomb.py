@@ -84,7 +84,8 @@ def main():
         if check_bound(kk_rect) != (True, True):  #練習4
             kk_rect.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rect)  #練習3
-        avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]  #演習2：tmrに応じて速度を上げる
+        #Issue2演算子の前後にスペースの追加
+        avx, avy = vx * accs[min(tmr // 500, 9)], vy * accs[min(tmr // 500, 9)]  #演習2：tmrに応じて速度を上げる
         bb_rect.move_ip(avx, avy)  #練習2
         yoko, tate = check_bound(bb_rect)  #練習4
         if not yoko:
