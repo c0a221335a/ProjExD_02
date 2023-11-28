@@ -52,6 +52,8 @@ def main():
     bb_rect.centerx = random.randint(0, WIDTH)  #練習1
     bb_rect.centery = random.randint(0, HEIGHT)  #練習1
     vx, vy = +5, +5  #練習2
+    accs = [a for a in range(1, 11)]  #演習2：加速度リスト
+    
 
     clock = pg.time.Clock()
     tmr = 0
@@ -77,13 +79,16 @@ def main():
         if check_bound(kk_rect) != (True, True):  #練習4
             kk_rect.move_ip(-sum_mv[0], -sum_mv[1])
         screen.blit(kk_img, kk_rect)  #練習3
-        bb_rect.move_ip(vx, vy)  #練習2
+        avx, avy = vx*accs[min(tmr//500, 9)], vy*accs[min(tmr//500, 9)]  #演習2：tmrに応じて速度を上げる
+        bb_rect.move_ip(avx, avy)  #練習2
         yoko, tate = check_bound(bb_rect)  #練習4
         if not yoko:
             vx *= -1
+            avx *= -1
         if not tate:
             vy *= -1
-        bb_rect.move_ip(vx, vy)
+            avy *= -1
+        bb_rect.move_ip(avx, avy)
         screen.blit(bb_img, bb_rect)
         pg.display.update()
         tmr += 1
